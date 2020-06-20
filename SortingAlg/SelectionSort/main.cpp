@@ -62,7 +62,6 @@ void QuickSortRecursive(int arr[],int nLeft,int nRight)
     PrintArray(arr,nLeft,nRight);
     printf("********递归快排基准数左边第%d~%d号元素\n",nLeft,nL-1);
     QuickSortRecursive(arr,nLeft,nL-1);
-    printf("********递归快排基准数右边第%d~%d号元素\n",nL+1,nRight);
     QuickSortRecursive(arr,nL+1,nRight);
 }
 int main()
