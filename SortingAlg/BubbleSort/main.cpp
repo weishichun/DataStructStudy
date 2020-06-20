@@ -8,11 +8,11 @@ void PrintVec(vector<int> vec)
         cout << *it  << " ";
     cout << endl;
 }
-void PrintArray(int *arr,int len)
+void PrintArray(int arr[],int len)
 {
     cout << "当前序列: ";
     for(int i = 0; i < len ; i++)
-        cout << *(arr+i)  << " ";
+        cout << arr[i]  << " ";
     cout << endl;
 }
 void BubbleSortByVector(vector<int>& vec)
