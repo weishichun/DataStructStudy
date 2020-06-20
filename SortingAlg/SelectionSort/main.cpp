@@ -1,5 +1,6 @@
 #include <iostream>
-
+#include <vector>
+#include <stack>
 using namespace std;
 void PrintArray(int arr[],int nStart,int nEnd)
 {
@@ -19,6 +20,15 @@ void Swap(int arr[],int i, int j)
     int tmp = arr[i];
     arr[i] = arr[j];
     arr[j] = tmp;
+}
+void SwapV2(int &a, int &b)
+{
+    if(&a != &b)
+    {
+        a ^= b;
+        b ^= a;
+        a ^= b;
+    }
 }
 /* 快速排序递归版本:
  * 从序列中随机选择一个基准数,将基准移动到数据中间,
@@ -64,10 +74,112 @@ void QuickSortRecursive(int arr[],int nLeft,int nRight)
     QuickSortRecursive(arr,nLeft,nL-1);
     QuickSortRecursive(arr,nL+1,nRight);
 }
+//递归快速排序vector版本
+int GetPartitions(vector<int> &vecNums,int low,int high)
+{
+    int keyVal = vecNums[low];
+    cout << "基准数:" << keyVal << endl;
+    while (low < high) {
+        while (low < high && keyVal <= vecNums[high] ) {
+            high--;
+        }
+        vecNums[low] = vecNums[high];
+        while(low < high && keyVal >= vecNums[low]){
+            low++;
+        }
+        vecNums[high] = vecNums[low];
+    }
+    vecNums[low] = keyVal;
+    return low;
+}
+void QuickSortRecursiveV2(vector<int> &vecNums,int low,int high)
+{
+    if(low >= high)
+    {
+        return;
+    }
+    int nMid = GetPartitions(vecNums,low,high);
+    QuickSortRecursiveV2(vecNums,low,nMid-1);
+    QuickSortRecursiveV2(vecNums,nMid+1,high);
+}
+void PrintVec(vector<int> vecNums)
+{
+    cout << "当前vector序列:";
+    for(auto num : vecNums)
+    {
+        cout << num << " ";
+    }
+    cout << endl;
+}
+void PrintVec2(vector<int> vec)
+{
+    cout << "当前vector序列: ";
+    for(auto it = vec.begin();it != vec.end(); it++)
+        cout << *it  << " ";
+    cout << endl;
+}
+void QuickSortNonRecursive(vector<int>& vecNums,int low, int high)
+{
+    stack<int> stackNum;
+    if(low < high)
+    {
+        PrintVec2(vecNums);
+        printf("划分区域:[%d,%d]\n",low,high);
+        int nMid = GetPartitions(vecNums,low,high);
+        printf("基准数:%d,位置:%d\n",vecNums[nMid],nMid);
+        PrintVec2(vecNums);
+        if(nMid - 1 > low)
+        {
+            printf("基准数左边范围边界入栈:[%d,%d]\n",low,nMid-1);
+            stackNum.push(low);
+            stackNum.push(nMid -1);
+        }
+        if(nMid + 1 < high)
+        {
+            printf("基准数右边范围边界入栈:[%d,%d]\n",nMid+1,high);
+            stackNum.push(nMid + 1);
+            stackNum.push(high);
+        }
+        while (!stackNum.empty())
+        {
+            int qHeight = stackNum.top();
+            stackNum.pop();
+            int pLow = stackNum.top();
+            stackNum.pop();
+            printf("区域边界出栈,并划分区域:[%d,%d]\n",pLow,qHeight);
+            int pqMid = GetPartitions(vecNums, pLow, qHeight);
+            printf("基准数:%d,位置:%d\n",vecNums[nMid],nMid);
+            PrintVec2(vecNums);
+            if (pqMid - 1 > pLow)
+            {
+                printf("基准数左边范围边界入栈:[%d,%d]\n",pLow,pqMid-1);
+                stackNum.push(pLow);
+                stackNum.push(pqMid - 1);
+            }
+            if (pqMid + 1 < qHeight)
+            {
+                printf("基准数右边范围边界入栈:[%d,%d]\n",pqMid+1,qHeight);
+                stackNum.push(pqMid + 1);
+                stackNum.push(qHeight);
+            }
+        }
+    }
+}
 int main()
 {
+    cout << "*******************快速排序递归数组版本***********************" << endl;
     int arr[10] = {89,32,38,487,43,0,5,893,13,3143};
     QuickSortRecursive(arr,0,9);
     PrintArray(arr,0,9);
+    cout << endl <<  "*******************快速排序递归,vector版本***********************" << endl;
+    vector<int> vecNums = {89,32,38,487,43,0,5,893,13,3143};
+    PrintVec2(vecNums);
+    QuickSortRecursiveV2(vecNums,0,vecNums.size()-1);
+    PrintVec(vecNums);
+    cout <<  endl << "*******************快速排序非递归版本***********************" << endl;
+    vecNums.clear();
+    vecNums = {89,32,38,487,43,0,5,893,13,3143};
+    QuickSortNonRecursive(vecNums,0, vecNums.size()-1);
+    PrintVec(vecNums);
     return 0;
 }
