@@ -73,11 +73,39 @@ void InsertSort(vector<int> &vecNums)
         PrintVec2(vecNums);
     }
 }
+//直接插入排序
+void Inert_Sort(vector<int> &vecNums)
+{
+    int i, j;
+    for (i = 1; i < vecNums.size(); ++i)
+    {
+        int temp = vecNums[i];
+        for (j = i - 1; j >= 0; --j)
+        {
+            if (temp < vecNums[j])
+            {
+                vecNums[j + 1] = vecNums[j];    //在有序列表中比temp值大的元素后移
+            }
+            else
+            {
+                break;//temp大于有序表中的最后一位则不需要移动
+            }
+        }
+        vecNums[j+1] = temp;//跳出内层循环后插入在合适的位置
+    }
+}
+
+
 int main()
 {
     vector<int> vecNums = {73,42,316,5,562};
     PrintVec2(vecNums);
     InsertSort(vecNums);
     PrintVec2(vecNums);
+
+    vector<int> vecNums1 = {73,42,316,5,562};
+    PrintVec2(vecNums1);
+    InsertSort(vecNums1);
+    PrintVec2(vecNums1);
     return 0;
 }
