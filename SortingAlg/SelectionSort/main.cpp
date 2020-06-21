@@ -78,7 +78,6 @@ void QuickSortRecursive(int arr[],int nLeft,int nRight)
 int GetPartitions(vector<int> &vecNums,int low,int high)
 {
     int keyVal = vecNums[low];
-    cout << "基准数:" << keyVal << endl;
     while (low < high) {
         while (low < high && keyVal <= vecNums[high] ) {
             high--;
@@ -113,9 +112,15 @@ void PrintVec(vector<int> vecNums)
 }
 void PrintVec2(vector<int> vec)
 {
-    cout << "当前vector序列: ";
+    cout << "当前vector序列: " << endl;
+    cout << "序列号: ";
+    int i = 0;
+    for(auto it = vec.begin();it != vec.end(); it++,i++)
+        printf("%3d ", i);
+    cout << endl;
+    cout << "元素值: ";
     for(auto it = vec.begin();it != vec.end(); it++)
-        cout << *it  << " ";
+        printf("%3d ", *it);
     cout << endl;
 }
 void QuickSortNonRecursive(vector<int>& vecNums,int low, int high)
@@ -126,7 +131,7 @@ void QuickSortNonRecursive(vector<int>& vecNums,int low, int high)
         PrintVec2(vecNums);
         printf("划分区域:[%d,%d]\n",low,high);
         int nMid = GetPartitions(vecNums,low,high);
-        printf("基准数:%d,位置:%d\n",vecNums[nMid],nMid);
+        printf("基准数:%d,位置:%d,结果如下:\n",vecNums[nMid],nMid);
         PrintVec2(vecNums);
         if(nMid - 1 > low)
         {
@@ -148,7 +153,7 @@ void QuickSortNonRecursive(vector<int>& vecNums,int low, int high)
             stackNum.pop();
             printf("区域边界出栈,并划分区域:[%d,%d]\n",pLow,qHeight);
             int pqMid = GetPartitions(vecNums, pLow, qHeight);
-            printf("基准数:%d,位置:%d\n",vecNums[nMid],nMid);
+            printf("基准数:%d,位置:%d,结果如下:\n",vecNums[pqMid],pqMid);
             PrintVec2(vecNums);
             if (pqMid - 1 > pLow)
             {
@@ -175,11 +180,11 @@ int main()
     vector<int> vecNums = {89,32,38,487,43,0,5,893,13,3143};
     PrintVec2(vecNums);
     QuickSortRecursiveV2(vecNums,0,vecNums.size()-1);
-    PrintVec(vecNums);
+    PrintVec2(vecNums);
     cout <<  endl << "*******************快速排序非递归版本***********************" << endl;
     vecNums.clear();
     vecNums = {89,32,38,487,43,0,5,893,13,3143};
     QuickSortNonRecursive(vecNums,0, vecNums.size()-1);
-    PrintVec(vecNums);
+    PrintVec2(vecNums);
     return 0;
 }
