@@ -80,6 +80,7 @@ int GetElement(SequenceList* pSL,int n,Point2D *pt)
     }
     pt->x = pSL->pt[n].x;
     pt->y = pSL->pt[n].y;
+    return TRUE;
 }
 //从nPos起查找元素pt第一次出现的位置.
 int FindElement(SequenceList* pSL,int nPos,Point2D *pt)
@@ -190,9 +191,9 @@ int Delete(SequenceList* pSL, int nPos)
     if(nPos == pSL->length-1){
         return --pSL->length;
     }
-    for(nPos;nPos < pSL->length;++nPos){
-        pSL->pt[nPos].x = pSL->pt[nPos+1].x;
-        pSL->pt[nPos].y = pSL->pt[nPos+1].y;
+    for(int i = nPos;i < pSL->length;++i){
+        pSL->pt[i].x = pSL->pt[i+1].x;
+        pSL->pt[i].y = pSL->pt[i+1].y;
     }
     return  --pSL->length;
 }
@@ -308,8 +309,8 @@ int main()
         Append(pLb,&pt2);
     }
     printf("\n创建线性表B,并填入50个元素\n");
-    ForEach(pLa,PrintPosition);
-    printf("\n当前线性表B:len:%d,size:%d\n",GetLength(pLa),GetSize(pLa));
+    ForEach(pLb,PrintPosition);
+    printf("\n当前线性表B:len:%d,size:%d\n",GetLength(pLb),GetSize(pLb));
     printf("\n将线性表B复制到线性表A\n");
     Copy(pLa,pLb);
     ForEach(pLa,PrintPosition);
