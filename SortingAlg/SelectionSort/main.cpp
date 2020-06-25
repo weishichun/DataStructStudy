@@ -38,8 +38,8 @@ void SelectionSort(int arr[], int len)
         }
         if(i != minIndex)
         {
-            printf("本趟最小元素下标有更新为:%d,交换初始最小元素arr[%d]:%d和本趟最终最小元素arr[%d]:%d\n",
-                   minIndex,minIndex,arr[minIndex],i,arr[i]);
+            printf("交换初始最小元素arr[%d]:%d和本趟最终最小元素arr[%d]:%d\n",
+                   i,arr[i],minIndex,arr[minIndex]);
             tmp = arr[i];
             arr[i] = arr[minIndex];
             arr[minIndex] = tmp;
@@ -49,7 +49,7 @@ void SelectionSort(int arr[], int len)
 }
 int main()
 {
-    int arr[10] = {1,2,3,4,5,6,7,8,9,10};
+    int arr[10] = {42,3,12,87,23,0,100,5,11,4};
     PrintArray(arr,10);
     SelectionSort(arr,10);
     return 0;
